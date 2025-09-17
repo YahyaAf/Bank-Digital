@@ -1,4 +1,4 @@
-package memoires;
+package repositories.memoires;
 
 public class InMemoryTransactionRepository {
 }

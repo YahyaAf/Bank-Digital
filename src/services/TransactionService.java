@@ -1,4 +1,4 @@
 package services;
 
-public interface TransactionService {
+public class TransactionService {
 }

@@ -1,4 +1,4 @@
 package services;
 
-public interface AccountService {
+public class AccountService {
 }

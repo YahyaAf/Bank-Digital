@@ -1,6 +1,9 @@
 package models;
 
+import java.util.UUID;
+
 public class User {
+    private UUID id;
     private String name;
     private String email;
     private String address;
@@ -9,11 +12,16 @@ public class User {
 
     public User(){}
 
-    public User(String name, String email, String password, String address){
+    public User( String name, String email, String password, String address){
+        this.id = UUID.randomUUID(); ;
         this.name = name;
-        this.email= email;
-        this.password=password;
+        setEmail(email);
+        setPassword(password);
         this.address=address;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getName(){
@@ -27,6 +35,10 @@ public class User {
         return this.email;
     }
     public void setEmail(String email){
+        if(email == null || !email.contains("@")){
+            System.out.println("Invalid Email");
+            return;
+        }
         this.email = email;
     }
 
@@ -38,7 +50,23 @@ public class User {
     }
 
     public void setPassword(String password){
+        if(password == null || password.length()<6){
+            System.out.println("Invalid Password");
+            return;
+        }
         this.password = password;
+    }
+    public String getPassword(){
+        return this.password;
+    }
+
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 
 }
