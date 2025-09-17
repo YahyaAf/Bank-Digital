@@ -17,6 +17,14 @@ public class AuthService {
             System.out.println("Email Already Exists");
             return;
         }
+        if(password == null || password.length() < 6){
+            System.out.println("Password too short");
+            return;
+        }
+        if(email == null || !email.contains("@")){
+            System.out.println("Invalid Email");
+            return;
+        }
         User user = new User(name, email, password, address);
         userRepository.save(user);
         System.out.println("User "+user.getName()+" has been registered successfully");
