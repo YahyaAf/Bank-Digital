@@ -104,6 +104,10 @@ public class AuthService {
         System.out.println("Password changed successfully");
     }
 
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
     public void showProfile(){
         if(this.currentUser == null){
             System.out.println("User is not logged in");

@@ -1,7 +1,13 @@
+import models.Account;
+import repositories.AccountRepository;
 import repositories.UserRepository;
+import repositories.memoires.InMemoryAccountRepository;
 import repositories.memoires.InMemoryUserRepository;
+import services.AccountService;
 import services.AuthService;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -11,6 +17,8 @@ public class Main {
         Scanner reader = new Scanner(System.in);
         UserRepository userRepository = new InMemoryUserRepository();
         AuthService authService = new AuthService(userRepository);
+        AccountRepository accountRepository = new InMemoryAccountRepository();
+        AccountService accountService = new AccountService(accountRepository,authService);
         int choix;
 
         do {
@@ -43,7 +51,11 @@ public class Main {
                             System.out.println("2. Change password");
                             System.out.println("3. Change email");
                             System.out.println("4. Change address");
-                            System.out.println("5. logout");
+                            System.out.println("5. Create account");
+                            System.out.println("6. list my accounts");
+                            System.out.println("7. Balance of account(By id of account)");
+                            System.out.println("8. Close account(By id of account)");
+                            System.out.println("20. logout");
                             choix2 = reader.nextInt();
                             switch (choix2){
                                 case 1:
@@ -67,15 +79,26 @@ public class Main {
                                     authService.updateAddress(newAddress);
                                     break;
                                 case 5:
-                                    authService.logout();
+                                    accountService.createAccount();
+                                    break;
+                                case 6:
+                                    accountService.listUserAccounts();
+                                    break;
+                                case 7:
+                                    System.out.println("Please enter your account number");
+                                    String accountNumber = reader.next().trim();
+                                    accountService.getBalance(accountNumber);
+                                    break;
+                                case 8:
+                                    System.out.println("Please enter your account number");
+                                    String accountClose =  reader.next().trim();
+                                    accountService.closeAccount(accountClose);
                                     break;
                                 default:
                                     System.out.println("Wrong choice");
                             }
-
-                        }while(choix2 != 5);
+                        }while(choix2 != 20);
                     }
-
                     break;
                 case 0:
                     System.out.println("Goodbye!");
