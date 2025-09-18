@@ -1,14 +1,19 @@
 import models.Account;
 import repositories.AccountRepository;
+import repositories.TransactionRepository;
 import repositories.UserRepository;
 import repositories.memoires.InMemoryAccountRepository;
+import repositories.memoires.InMemoryTransactionRepository;
 import repositories.memoires.InMemoryUserRepository;
 import services.AccountService;
 import services.AuthService;
+import services.TransactionService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.UUID;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -19,6 +24,8 @@ public class Main {
         AuthService authService = new AuthService(userRepository);
         AccountRepository accountRepository = new InMemoryAccountRepository();
         AccountService accountService = new AccountService(accountRepository,authService);
+        TransactionRepository transactionRepository = new InMemoryTransactionRepository();
+        TransactionService transactionService = new TransactionService(transactionRepository,accountRepository,authService);
         int choix;
 
         do {
@@ -55,6 +62,10 @@ public class Main {
                             System.out.println("6. list my accounts");
                             System.out.println("7. Balance of account(By id of account)");
                             System.out.println("8. Close account(By id of account)");
+                            System.out.println("9. Deposit");
+                            System.out.println("10. Withdraw");
+                            System.out.println("11. Transfer");
+                            System.out.println("12. Historique");
                             System.out.println("20. logout");
                             choix2 = reader.nextInt();
                             switch (choix2){
@@ -90,10 +101,43 @@ public class Main {
                                     accountService.getBalance(accountNumber);
                                     break;
                                 case 8:
-                                    System.out.println("Please enter your account number");
+                                    System.out.println("Please enter your account number : ");
                                     String accountClose =  reader.next().trim();
                                     accountService.closeAccount(accountClose);
                                     break;
+                                case 9:
+                                    System.out.println("Please enter your account number : ");
+                                    String accountDeposit = reader.next().trim();
+                                    System.out.println("Please enter the amount : ");
+                                    BigDecimal depositAmount = reader.nextBigDecimal();
+                                    System.out.println("Please enter description : ");
+                                    String depositDescription = reader.nextLine().trim();
+                                    transactionService.deposit(accountDeposit,depositAmount,depositDescription);
+                                    break;
+                                case 10:
+                                    System.out.println("Please enter your account number : ");
+                                    String accountWithdraw = reader.next().trim();
+                                    System.out.println("Please enter the amount : ");
+                                    BigDecimal withdrawAmount = reader.nextBigDecimal();
+                                    System.out.println("Please enter description : ");
+                                    String withdrawDescription = reader.nextLine().trim();
+                                    transactionService.withdraw(accountWithdraw,withdrawAmount,withdrawDescription);
+                                    break;
+                                case 11:
+                                    System.out.println("Please enter the from account number :");
+                                    String accountFrom = reader.next().trim();
+                                    System.out.println("Please enter the to account number :");
+                                    String accountTo = reader.next().trim();
+                                    System.out.println("Please enter the amount : ");
+                                    BigDecimal accountBalance = reader.nextBigDecimal();
+                                    System.out.println("Please enter description : ");
+                                    String accountBalanceDescription = reader.nextLine().trim();
+                                    transactionService.transfer(accountFrom,accountTo,accountBalance,accountBalanceDescription);
+                                    break;
+                                case 12:
+                                    System.out.println("Please enter your account number :");
+                                    String accountHistory = reader.next().trim();
+                                    transactionService.history(accountHistory);
                                 default:
                                     System.out.println("Wrong choice");
                             }
