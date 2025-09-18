@@ -25,6 +25,7 @@ public class AuthService {
             System.out.println("Invalid Email");
             return;
         }
+
         User user = new User(name, email, password, address);
         userRepository.save(user);
         System.out.println("User "+user.getName()+" has been registered successfully");
