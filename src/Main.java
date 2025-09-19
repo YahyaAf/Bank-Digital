@@ -110,16 +110,18 @@ public class Main {
                                     String accountDeposit = reader.next().trim();
                                     System.out.println("Please enter the amount : ");
                                     BigDecimal depositAmount = reader.nextBigDecimal();
+                                    reader.nextLine();
                                     System.out.println("Please enter description : ");
                                     String depositDescription = reader.nextLine().trim();
                                     transactionService.deposit(accountDeposit,depositAmount,depositDescription);
                                     break;
                                 case 10:
-                                    System.out.println("Please enter your account number : ");
+                                    System.out.print("Please enter your account number : ");
                                     String accountWithdraw = reader.next().trim();
-                                    System.out.println("Please enter the amount : ");
+                                    System.out.print("Please enter the amount : ");
                                     BigDecimal withdrawAmount = reader.nextBigDecimal();
-                                    System.out.println("Please enter description : ");
+                                    reader.nextLine();
+                                    System.out.print("Please enter description : ");
                                     String withdrawDescription = reader.nextLine().trim();
                                     transactionService.withdraw(accountWithdraw,withdrawAmount,withdrawDescription);
                                     break;
@@ -130,6 +132,7 @@ public class Main {
                                     String accountTo = reader.next().trim();
                                     System.out.println("Please enter the amount : ");
                                     BigDecimal accountBalance = reader.nextBigDecimal();
+                                    reader.nextLine();
                                     System.out.println("Please enter description : ");
                                     String accountBalanceDescription = reader.nextLine().trim();
                                     transactionService.transfer(accountFrom,accountTo,accountBalance,accountBalanceDescription);
