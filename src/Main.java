@@ -66,7 +66,7 @@ public class Main {
                             System.out.println("10. Withdraw");
                             System.out.println("11. Transfer");
                             System.out.println("12. Historique");
-                            System.out.println("20. logout");
+                            System.out.println("13. logout");
                             choix2 = reader.nextInt();
                             switch (choix2){
                                 case 1:
@@ -138,10 +138,13 @@ public class Main {
                                     System.out.println("Please enter your account number :");
                                     String accountHistory = reader.next().trim();
                                     transactionService.history(accountHistory);
+                                case 13:
+                                    authService.logout();
+                                    break;
                                 default:
                                     System.out.println("Wrong choice");
                             }
-                        }while(choix2 != 20);
+                        }while(choix2 != 13);
                     }
                     break;
                 case 0:
