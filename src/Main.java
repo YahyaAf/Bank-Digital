@@ -1,3 +1,4 @@
+import helpers.InputHelper;
 import models.Account;
 import repositories.AccountRepository;
 import repositories.TransactionRepository;
@@ -36,21 +37,15 @@ public class Main {
             choix = reader.nextInt();
             switch(choix){
                 case 1:
-                    System.out.println("Enter name : ");
-                    String name =  reader.next();
-                    System.out.println("Enter email : ");
-                    String email =  reader.next();
-                    System.out.println("Enter address : ");
-                    String address = reader.next();
-                    System.out.println("Enter password :");
-                    String password = reader.next();
+                    String name =  InputHelper.readInput("Enter name : ");
+                    String email =  InputHelper.readInput("Enter email : ");
+                    String address = InputHelper.readInput("Enter address : ");
+                    String password = InputHelper.readInput("Enter password : ");
                     authService.register(name,email,password,address);
                     break;
                 case 2:
-                    System.out.println("Enter email :");
-                    String loginEmail = reader.next();
-                    System.out.println("Enter password :");
-                    String loginPassword = reader.next();
+                    String loginEmail = InputHelper.readInput("Enter email : ");
+                    String loginPassword = InputHelper.readInput("Enter password : ");
                     if(authService.login(loginEmail,loginPassword)){
                         int choix2;
                         do {
@@ -80,20 +75,16 @@ public class Main {
                                                 authService.showProfile();
                                                 break;
                                             case 2:
-                                                System.out.println("Enter old password : ");
-                                                String oldPassword = reader.next();
-                                                System.out.println("Enter new password : ");
-                                                String newPassword = reader.next();
+                                                String oldPassword = InputHelper.readInput("Enter old password : ");
+                                                String newPassword = InputHelper.readInput("Enter new password : ");
                                                 authService.changePassword(oldPassword,newPassword);
                                                 break;
                                             case 3:
-                                                System.out.println("Enter new email : ");
-                                                String newEmail = reader.next();
+                                                String newEmail = InputHelper.readInput("Enter new email : ");
                                                 authService.updateEmail(newEmail);
                                                 break;
                                             case 4:
-                                                System.out.println("Enter new address : ");
-                                                String newAddress = reader.next();
+                                                String newAddress = InputHelper.readInput("Enter new address : ");
                                                 authService.updateAddress(newAddress);
                                                 break;
                                             default:
@@ -108,8 +99,7 @@ public class Main {
                                     accountService.listUserAccounts();
                                     break;
                                 case 4:
-                                    System.out.println("Please enter your account number");
-                                    String accountNumber = reader.next().trim();
+                                    String accountNumber = InputHelper.readInput("Please enter your account number");
                                     accountService.getBalance(accountNumber);
                                     break;
                                 case 5:
@@ -118,41 +108,28 @@ public class Main {
                                     accountService.closeAccount(accountClose);
                                     break;
                                 case 6:
-                                    System.out.println("Please enter your account number : ");
-                                    String accountDeposit = reader.next().trim();
-                                    System.out.println("Please enter the amount : ");
-                                    BigDecimal depositAmount = reader.nextBigDecimal();
-                                    reader.nextLine();
-                                    System.out.println("Please enter description : ");
-                                    String depositDescription = reader.nextLine().trim();
-                                    transactionService.deposit(accountDeposit,depositAmount,depositDescription);
+                                    String accountDeposit = InputHelper.readInput("Please enter your account number : ");
+                                    BigDecimal depositAmount = InputHelper.readBigDecimal("Please enter the amount : ");
+                                    String depositDescription = InputHelper.readInput("Please enter description : ");
+                                    transactionService.deposit(accountDeposit, depositAmount, depositDescription);
                                     break;
                                 case 7:
-                                    System.out.print("Please enter your account number : ");
-                                    String accountWithdraw = reader.next().trim();
-                                    System.out.print("Please enter the amount : ");
-                                    BigDecimal withdrawAmount = reader.nextBigDecimal();
-                                    reader.nextLine();
-                                    System.out.print("Please enter description : ");
-                                    String withdrawDescription = reader.nextLine().trim();
-                                    transactionService.withdraw(accountWithdraw,withdrawAmount,withdrawDescription);
+                                    String accountWithdraw = InputHelper.readInput("Please enter your account number : ");
+                                    BigDecimal withdrawAmount = InputHelper.readBigDecimal("Please enter the amount : ");
+                                    String withdrawDescription = InputHelper.readInput("Please enter description : ");
+                                    transactionService.withdraw(accountWithdraw, withdrawAmount, withdrawDescription);
                                     break;
                                 case 8:
-                                    System.out.println("Please enter the from account number :");
-                                    String accountFrom = reader.next().trim();
-                                    System.out.println("Please enter the to account number :");
-                                    String accountTo = reader.next().trim();
-                                    System.out.println("Please enter the amount : ");
-                                    BigDecimal accountBalance = reader.nextBigDecimal();
-                                    reader.nextLine();
-                                    System.out.println("Please enter description : ");
-                                    String accountBalanceDescription = reader.nextLine().trim();
-                                    transactionService.transfer(accountFrom,accountTo,accountBalance,accountBalanceDescription);
+                                    String accountFrom = InputHelper.readInput("Please enter the from account number : ");
+                                    String accountTo = InputHelper.readInput("Please enter the to account number : ");
+                                    BigDecimal accountBalance = InputHelper.readBigDecimal("Please enter the amount : ");
+                                    String accountBalanceDescription = InputHelper.readInput("Please enter description : ");
+                                    transactionService.transfer(accountFrom, accountTo, accountBalance, accountBalanceDescription);
                                     break;
                                 case 9:
-                                    System.out.println("Please enter your account number :");
-                                    String accountHistory = reader.next().trim();
+                                    String accountHistory = InputHelper.readInput("Please enter your account number : ");
                                     transactionService.history(accountHistory);
+                                    break;
                                 case 10:
                                     authService.logout();
                                     break;
