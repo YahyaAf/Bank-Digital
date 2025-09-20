@@ -87,6 +87,9 @@ public class Main {
                                                 String newAddress = InputHelper.readInput("Enter new address : ");
                                                 authService.updateAddress(newAddress);
                                                 break;
+                                            case 0:
+                                                System.out.println("");
+                                                break;
                                             default:
                                                 System.out.println("Wrong choix");
                                         }
